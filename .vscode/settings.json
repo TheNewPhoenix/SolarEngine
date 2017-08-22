@@ -1,0 +1,7 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "python.pythonPath": "C:/Python27/python.exe",
+    "python.autoComplete.extraPaths": [
+        "C:/Users/sw33tums/AppData/Local/CMakeBuild/SolarEngine/build/x86-Debug/Debug"
+    ]
+}
