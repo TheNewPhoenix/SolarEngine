@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <string>
+#include <ostream>
 
 #include "..\core\Object.h"
 #include "..\Common.h"
@@ -33,7 +34,17 @@ namespace solar
 		int getLevel() const { return m_level; }
 		bool isTimestampEnabled() const { return m_timestampEnabled; }
 		std::string getLastMessage() const { return m_lastMessage; }
+		void setStream(std::ostream* stream);
+
+		template <typename T>
+		Log& operator << (const T& object)
+		{
+			(*m_out) << object;
+			return *this;
+		}
+
 		 
+		static Log* log(int level);
 		static void write(int level, const std::string& message);
 
 	private:
@@ -41,6 +52,8 @@ namespace solar
 		int m_level;
 		bool m_timestampEnabled;
 		bool m_inWrite;
+
+		std::ostream *m_out;
 	};
 
 	#ifdef SOLAR_LOGGING
@@ -48,6 +61,7 @@ namespace solar
 	#define SOLAR_LOGINFO(message) solar::Log::write(solar::LOG_INFO, message)
 	#define SOLAR_LOGWARNING(message) solar::Log::write(solar::LOG_WARNING, message)
 	#define SOLAR_LOGERROR(message) solar::Log::write(solar::LOG_ERROR, message)
+	#define SOLAR_DEBUG_LOG() solar::Log::log(solar::LOG_DEBUG)
 	#else
 	#define SOLAR_LOGDEBUG(message) ((void)0)
 	#define SOLAR_LOGINFO(message) ((void)0)

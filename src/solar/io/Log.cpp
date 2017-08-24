@@ -27,6 +27,7 @@ namespace solar
 	Log::~Log()
 	{
 		logInstance = 0;
+		m_out = 0;
 	}
 
 	void Log::setLevel(int level)
@@ -43,6 +44,16 @@ namespace solar
 	void Log::enableTimestamp(bool enable)
 	{
 		m_timestampEnabled = enable;
+	}
+
+	void Log::setStream(std::ostream* stream)
+	{
+		m_out = stream;
+	}
+
+	Log* Log::log(int level)
+	{
+		return logInstance;
 	}
 
 	void Log::write(int level, const std::string& message)
