@@ -5,6 +5,7 @@
 
 #include "..\core\Object.h"
 #include "..\io\Log.h"
+#include "..\resource\Image.h"
 
 namespace solar
 {
@@ -38,8 +39,14 @@ namespace solar
 		int getHeight() const { return m_height; }
 
 	private:
-		void handleWindowResized(const char* eventType, EventParameters& params);
-		int m_width, m_height;
+		int m_width;
+		int m_height;
+		bool m_fullscreen;
+		bool m_borderless;
+		bool m_resizable;
+		bool m_vsync;
+
+		std::string title;
 	};
 
 }

@@ -33,7 +33,7 @@ namespace solar
 	{
 		if (level < LOG_DEBUG || level > LOG_NONE)
 		{
-			SOLAR_LOGERROR("Cannot use this log level.");
+			SOLAR_LOGERROR() << "Cannot use this log level.";
 			return;
 		}
 
@@ -64,6 +64,11 @@ namespace solar
 		formattedMessage += "\n";
 
 		printf("%s", formattedMessage.c_str());
+	}
+
+	Log* Log::getInstance()
+	{
+		return logInstance;
 	}
 
 }

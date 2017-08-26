@@ -24,7 +24,7 @@ namespace solar
 	{
 		if (!glfwInit())
 		{
-			SOLAR_LOGERROR("GLFW not inititialized");
+			SOLAR_LOGERROR() << "GLFW not inititialized";
 		}
 
 		glfwWindow = glfwCreateWindow(width, height, "Hello World", NULL, NULL);
@@ -41,7 +41,7 @@ namespace solar
 
 		if (glewInit() != GLEW_OK)
 		{
-			SOLAR_LOGERROR("Failed to initialize GLEW");
+			SOLAR_LOGERROR() << "Failed to initialize GLEW";
 			return false;
 		}
 
