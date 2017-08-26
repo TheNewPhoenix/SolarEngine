@@ -2,6 +2,7 @@
 
 #include <gl\glew.h>
 #include <GLFW\glfw3.h>
+#include <SDL.h>
 
 #include "..\core\Object.h"
 #include "..\io\Log.h"
@@ -20,7 +21,15 @@ namespace solar
 
 		virtual ~Graphics();
 
-		bool init();
+		void setWindowTitle(const char* title);
+
+		void setWindowIcon(Image* image);
+
+		void setWindowPosition(int x, int y);
+
+		bool setMode(int width, int height, bool fullscreen, bool borderless, bool resizable, bool vsync, int monitor, int refreshRate);
+
+		bool setMode(int width, int height);
 
 		void enable(int capability);
 
@@ -38,6 +47,8 @@ namespace solar
 
 		int getHeight() const { return m_height; }
 
+		bool isInitialized() const;
+
 	private:
 		int m_width;
 		int m_height;
@@ -46,7 +57,10 @@ namespace solar
 		bool m_resizable;
 		bool m_vsync;
 
-		std::string title;
+		SDL_GLContext m_context;
+		SDL_Window* m_window;
+
+		std::string m_title;
 	};
 
 }
