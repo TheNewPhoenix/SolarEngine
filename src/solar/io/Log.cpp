@@ -27,14 +27,13 @@ namespace solar
 	Log::~Log()
 	{
 		logInstance = 0;
-		m_out = 0;
 	}
 
 	void Log::setLevel(int level)
 	{
 		if (level < LOG_DEBUG || level > LOG_NONE)
 		{
-			SOLAR_LOGERROR("Cannot use this log level.");
+			SOLAR_LOGERROR() << "Cannot use this log level.";
 			return;
 		}
 
@@ -44,16 +43,6 @@ namespace solar
 	void Log::enableTimestamp(bool enable)
 	{
 		m_timestampEnabled = enable;
-	}
-
-	void Log::setStream(std::ostream* stream)
-	{
-		m_out = stream;
-	}
-
-	Log* Log::log(int level)
-	{
-		return logInstance;
 	}
 
 	void Log::write(int level, const std::string& message)
@@ -75,6 +64,11 @@ namespace solar
 		formattedMessage += "\n";
 
 		printf("%s", formattedMessage.c_str());
+	}
+
+	Log* Log::getInstance()
+	{
+		return logInstance;
 	}
 
 }

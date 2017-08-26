@@ -47,7 +47,7 @@ namespace solar
 		glGetShaderiv(m_id, GL_COMPILE_STATUS, &result);
 		if (result == GL_FALSE)
 		{
-			SOLAR_LOGERROR("Unable to compile shader:\n" + getInfoLog());
+			SOLAR_LOGERROR() << "Unable to compile shader:\n" << getInfoLog();
 		}
 
 	}

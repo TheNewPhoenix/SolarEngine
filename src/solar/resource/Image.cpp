@@ -25,7 +25,7 @@ namespace solar
 		unsigned char* pixelData = getImageData(fileName, width, height, components);
 		if (!pixelData)
 		{
-			SOLAR_LOGERROR("Could not load image " + std::string(fileName) + ": " + std::string(stbi_failure_reason()));
+			SOLAR_LOGERROR() << "Could not load image " << fileName << ": " << stbi_failure_reason();
 			return;
 		}
 		setSize(width, height, components);

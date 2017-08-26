@@ -42,7 +42,9 @@ namespace solar
 
 		virtual void start()
 		{
-			SOLAR_LOGINFO("Started Model Test");
+			SOLAR_LOGINFO() << "Started Log Test";
+			SOLAR_LOGDEBUG() << "Started Log Test";
+			SOLAR_LOGDEBUG() << "Log numbers: " << 1;
 		}
 
 		virtual void stop()
@@ -74,4 +76,6 @@ int main(int, char**)
 	solar::Game* game = new solar::Game(context);
 	solar::Application* app = new solar::Application(context, game);
 	return app->run();
+
+	return 0;
 }

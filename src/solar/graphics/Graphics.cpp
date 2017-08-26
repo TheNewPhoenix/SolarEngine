@@ -6,18 +6,17 @@ namespace solar
 	Graphics::Graphics(Context* context) :
 		Object(context)
 	{
-		subscribeToEvent("window_resized", SOLAR_HANDLER(Graphics, handleWindowResized));
 	}
 
 	Graphics::~Graphics()
 	{
-		SOLAR_LOGINFO("Terminating GLFW");
+		SOLAR_LOGINFO() << "Terminating GLFW";
 		glfwTerminate();
 	}
 
 	bool Graphics::init()
 	{
-		SOLAR_LOGINFO("Initializing graphics");
+		SOLAR_LOGINFO() << "Initializing graphics";
 		
 		return true;
 	}
@@ -50,15 +49,6 @@ namespace solar
 	void Graphics::cullFace(int mode)
 	{
 		glCullFace(mode);
-	}
-
-	void Graphics::handleWindowResized(const char* eventType, EventParameters& params)
-	{
-		int width = boost::get<int>(params["width"]);
-		int height = boost::get<int>(params["height"]);
-		m_width = width;
-		m_height = height;
-		glViewport(0, 0, width, height);
 	}
 
 }

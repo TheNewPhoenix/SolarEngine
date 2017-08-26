@@ -68,7 +68,7 @@ namespace solar
 
 		virtual void start()
 		{
-			SOLAR_LOGINFO("Started Model Test");
+			SOLAR_LOGINFO() << "Started Model Test";
 		}
 
 		virtual void stop()

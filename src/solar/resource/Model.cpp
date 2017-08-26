@@ -22,7 +22,7 @@ namespace solar
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
-			SOLAR_LOGERROR(std::string("ERROR::ASSIMP::") + importer.GetErrorString());
+			SOLAR_LOGERROR() << "ERROR::ASSIMP::" << importer.GetErrorString();
 			return;
 		}
 
@@ -31,7 +31,7 @@ namespace solar
 
 	void Model::processScene(const aiScene* scene)
 	{
-		SOLAR_LOGDEBUG("Processing scene");
+		SOLAR_LOGDEBUG() << "Processing scene";
 
 		for (unsigned i = 0; i < scene->mNumMaterials; i++)
 			processMaterial(scene->mMaterials[i], scene);
@@ -42,7 +42,7 @@ namespace solar
 
 	void Model::processNode(aiNode* node, const aiScene* scene)
 	{
-		SOLAR_LOGDEBUG(std::string("Processing node: ") + node->mName.C_Str());
+		SOLAR_LOGDEBUG() << "Processing node: " << node->mName.C_Str();
 		for (unsigned i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
@@ -57,7 +57,7 @@ namespace solar
 
 	void Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
-		SOLAR_LOGDEBUG(std::string("Processing mesh: ") + mesh->mName.C_Str());
+		SOLAR_LOGDEBUG() << "Processing mesh: " << mesh->mName.C_Str();
 		std::shared_ptr<ModelMesh> model_mesh = std::make_shared<ModelMesh>();
 
 		model_mesh->id = mesh->mName.C_Str();
