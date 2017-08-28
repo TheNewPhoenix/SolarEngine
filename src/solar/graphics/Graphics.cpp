@@ -6,7 +6,15 @@ namespace solar
 	Graphics::Graphics(Context* context) :
 		Object(context),
 		m_context(0),
-		m_window(0)
+		m_window(0),
+		m_width(0),
+		m_height(0),
+		m_fullscreen(false),
+		m_borderless(false),
+		m_resizable(false),
+		m_vsync(false),
+		m_monitor(0),
+		m_refreshRate(0)
 	{
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 			SOLAR_LOGERROR() << "SDL could not initialize! SDL Error: " << SDL_GetError();
@@ -15,12 +23,13 @@ namespace solar
 
 	Graphics::~Graphics()
 	{
-		SOLAR_LOGINFO() << "Terminating GLFW";
-		glfwTerminate();
+		SOLAR_LOGINFO() << "Terminating Graphics";
 
 		//Destroy window	
 		SDL_DestroyWindow(m_window);
 		m_window = NULL;
+
+		SDL_GL_DeleteContext(m_context);
 
 		//Quit SDL subsystems
 		SDL_Quit();
@@ -28,7 +37,6 @@ namespace solar
 
 	bool Graphics::setMode(int width, int height, bool fullscreen, bool borderless, bool resizable, bool vsync, int monitor, int refreshRate)
 	{
-		SOLAR_LOGDEBUG() << "Setting mode" << m_window;
 		int monitors = SDL_GetNumVideoDisplays();
 		if (monitor >= monitors || monitor < 0)
 			monitor = 0;
@@ -74,20 +82,59 @@ namespace solar
 			if (glewError != GLEW_OK)
 			{
 				SOLAR_LOGERROR() << "Error initializing GLEW! " << glewGetErrorString(glewError);
+				return false;
 			}
 		}
+
+		SDL_GL_SetSwapInterval(vsync ? 1 : 0);
+
+		m_fullscreen = fullscreen;
+		m_borderless = borderless;
+		m_resizable = resizable;
+		m_vsync = vsync;
+		m_monitor = monitor;
+		m_refreshRate = refreshRate;
+
+		SDL_GL_GetDrawableSize(m_window, &m_width, &m_height);
+		if (!fullscreen)
+			SDL_GetWindowPosition(m_window, &m_position.x, &m_position.y);
+
+		clearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		SDL_GL_SwapWindow(m_window);
+
+		#ifdef SOLAR_LOGGING
+		SOLAR_LOGINFO() << "Screen mode set with dimensions " << m_width << "x" << m_height 
+			<< " and properties: " << (m_fullscreen ? "fullscreen" : "windowed")
+			<< ", monitor: " << m_monitor;
+		#endif // SOLAR_LOGGING
 
 		return true;
 	}
 
 	bool Graphics::setMode(int width, int height)
 	{
-		return true;
+		return setMode(width, height, m_fullscreen, m_borderless, m_resizable, m_vsync, m_monitor, m_refreshRate);
 	}
 
 	void Graphics::setWindowTitle(const char* title) 
 	{
 		m_title = title;
+	}
+
+	void Graphics::beginFrame()
+	{
+		if (!isInitialized())
+			return;
+
+		enable(GL_DEPTH_TEST);
+	}
+
+	void Graphics::endFrame()
+	{
+		if (!isInitialized())
+			return;
+
+		SDL_GL_SwapWindow(m_window);
 	}
 
 	bool Graphics::isInitialized() const
