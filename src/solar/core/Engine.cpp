@@ -40,6 +40,8 @@ namespace solar
 		if (m_initialized)
 			return true;
 
+		Graphics* graphics = GetSubsystem<Graphics>();
+
 		m_initialized = true;
 		return true;
 	}

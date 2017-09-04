@@ -1,6 +1,5 @@
 #include <solar\core\Application.h>
 #include <solar\core\Context.h>
-#include <solar\window\Window.h>
 #include <solar\graphics\StaticModel.h>
 #include <solar\graphics\Graphics.h>
 #include <solar\graphics\Camera.h>

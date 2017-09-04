@@ -1,6 +1,5 @@
 #include <solar\core\Application.h>
 #include <solar\core\Context.h>
-#include <solar\window\Window.h>
 #include <solar\graphics\StaticModel.h>
 #include <solar\graphics\Graphics.h>
 #include <solar\graphics\Camera.h>
@@ -25,18 +24,14 @@ namespace solar
 		Game(Context* context) :
 			ApplicationAdapter(context)
 		{
-			window = new Window(context);
 		}
 
 		virtual ~Game()
 		{
-			delete window;
 		}
 
 		virtual void setup()
 		{
-			window->createWindow();
-			window->setTitle(std::string("MODEL TEST"));
 
 		}
 
@@ -49,7 +44,6 @@ namespace solar
 
 		virtual void stop()
 		{
-			window->close();
 		}
 
 		virtual void handleUpdate(const char* eventType, EventParameters& params)
@@ -64,9 +58,6 @@ namespace solar
 		virtual void handleResize(const char* eventType, EventParameters& params)
 		{
 		}
-
-	private:
-		Window* window;
 	};
 }
 

@@ -1,4 +1,3 @@
-#include "..\window\wrap_window.h"
 #include "..\graphics\wrap_graphics.h"
 #include "Context.h"
 #include "Object.h"
@@ -113,5 +112,4 @@ PYBIND11_MODULE(SolarEnginePy, m)
 		.def_static("log_error", &Log::write, py::arg("level") = solar::LOG_ERROR, py::arg("message"))
 		.def_static("log_warning", &Log::write, py::arg("level") = solar::LOG_WARNING, py::arg("message"));
 	solar::wrap_graphics(m, object);
-	solar::wrap_window(m);
 }
