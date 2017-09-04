@@ -7,10 +7,6 @@ list(APPEND CMAKE_PREFIX_PATH "$ENV{PROGRAMFILES}/GLEW")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
 find_package(Assimp REQUIRED)
 include_directories(${ASSIMP_INCLUDE_DIRS})
 link_libraries(${ASSIMP_LIBRARIES})
@@ -18,10 +14,6 @@ link_libraries(${ASSIMP_LIBRARIES})
 find_package(pybind11 REQUIRED)
 include_directories(${pybind11_INCLUDE_DIRS})
 link_libraries(${pybind11_LIBRARIES})
-
-find_package(GLFW3 REQUIRED)
-include_directories(${GLFW_INCLUDE_DIR})
-link_libraries(${GLFW_LIBRARIES})
 
 find_package(GLM REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
@@ -107,11 +99,6 @@ set(SOLAR_RESOURCE_SRCS
 		src/solar/resource/Model.h
 )
 
-set(SOLAR_WINDOW_SRCS
-		src/solar/window/Window.cpp
-		src/solar/window/Window.h
-)
-
 set(Solar_SRCS
 		src/solar/Types.h
 		src/solar/Common.h
@@ -121,12 +108,9 @@ set(Solar_SRCS
 		${SOLAR_IO_SRCS}
 		${SOLAR_MATH_SRCS}
 		${SOLAR_RESOURCE_SRCS}
-		${SOLAR_WINDOW_SRCS}
 )
 
 set(SolarPy_SRCS
-		src/solar/window/wrap_window.cpp
-		src/solar/window/wrap_window.h
 		src/solar/graphics/wrap_graphics.cpp
 		src/solar/graphics/wrap_graphics.h
 		src/solar/core/Solar_Module.cpp

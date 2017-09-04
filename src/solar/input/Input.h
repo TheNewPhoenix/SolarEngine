@@ -19,7 +19,8 @@ namespace solar
 		bool getKeyDown(int key) const;
 		bool getKeyPressed(int key) const;
 
-
+	private:
+		void handleSDLEvent(void* sdlEvent);
 
 	};
 

@@ -1,57 +1,72 @@
-//Using SDL and standard IO
-#include <SDL.h>
-#include <stdio.h>
+#include <solar\core\Application.h>
+#include <solar\core\Context.h>
+#include <solar\graphics\StaticModel.h>
+#include <solar\graphics\Graphics.h>
+#include <solar\graphics\Camera.h>
+#include <solar\graphics\opengl\Program.h>
+#include <solar\graphics\Color.h>
+#include <solar\io\Log.h>
+#include <solar\resource\Model.h>
+
 #include <iostream>
+#include <string>
+#include <memory>
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+#include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
-int main(int argc, char** args)
+namespace solar
 {
 
-	//The window we'll be rendering to
-	SDL_Window* window = NULL;
-
-	//The surface contained by the window
-	SDL_Surface* screenSurface = NULL;
-
-	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	class Game : public ApplicationAdapter
 	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-	}
-	else
-	{
-		//Create window
-		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (window == NULL)
+	public:
+		Game(Context* context) :
+			ApplicationAdapter(context)
 		{
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		}
-		else
+
+		virtual ~Game()
 		{
-			//Get window surface
-			screenSurface = SDL_GetWindowSurface(window);
-
-			//Fill the surface white
-			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-
-			//Update the surface
-			SDL_UpdateWindowSurface(window);
-
-			//Wait two seconds
-			SDL_Delay(2000);
 		}
-	}
 
-	//Destroy window
-	SDL_DestroyWindow(window);
+		virtual void setup()
+		{
+			Graphics* graphics = GetSubsystem<Graphics>();
+			graphics->setWindowTitle("hello");
+			graphics->setMode(1280, 720, false, false, false, false, 0, 60);
 
-	//Quit SDL subsystems
-	SDL_Quit();
+		}
 
-	std::getchar();
+		virtual void start()
+		{
+			SOLAR_LOGINFO() << "Started SDL Test";
+		}
 
-	return 0;
+		virtual void stop()
+		{
+		}
+
+		virtual void handleUpdate(const char* eventType, EventParameters& params)
+		{
+		}
+
+		virtual void handleRender(const char* eventType, EventParameters& params)
+		{
+		}
+
+		virtual void handleResize(const char* eventType, EventParameters& params)
+		{
+		}
+
+	private:
+	};
+}
+
+int main(int, char**)
+{
+	solar::Context* context = new solar::Context();
+	solar::Game* game = new solar::Game(context);
+	solar::Application* app = new solar::Application(context, game);
+	return app->run();
 }

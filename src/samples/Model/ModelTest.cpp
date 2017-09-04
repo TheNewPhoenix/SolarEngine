@@ -1,6 +1,5 @@
 #include <solar\core\Application.h>
 #include <solar\core\Context.h>
-#include <solar\window\Window.h>
 #include <solar\graphics\StaticModel.h>
 #include <solar\graphics\Graphics.h>
 #include <solar\graphics\Camera.h>
@@ -25,21 +24,19 @@ namespace solar
 		Game(Context* context) :
 			ApplicationAdapter(context)
 		{
-			window = new Window(context);
 		}
 
 		virtual ~Game()
 		{
-			delete window;
 			delete program;
 		}
 
 		virtual void setup()
 		{
-			window->createWindow();
-			window->setTitle(std::string("MODEL TEST"));
-
 			Graphics* graphics = GetSubsystem<Graphics>();
+			graphics->setWindowTitle("MODEL TEST");
+			graphics->setMode(1280, 720, false, false, false, false, 0, 60);
+
 			graphics->enable(GL_DEPTH_TEST);
 
 			Shader vertexShader(GL_VERTEX_SHADER);
@@ -73,7 +70,6 @@ namespace solar
 
 		virtual void stop()
 		{
-			window->close();
 		}
 
 		virtual void handleUpdate(const char* eventType, EventParameters& params)
@@ -112,7 +108,6 @@ namespace solar
 		}
 
 	private:
-		Window* window;
 		Program* program;
 
 		StaticModel sModel;
