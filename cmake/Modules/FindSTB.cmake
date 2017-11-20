@@ -35,5 +35,5 @@ find_package_handle_standard_args(STB
 )
 
 mark_as_advanced(
-  GLFW_INCLUDE_DIR
+  STB_INCLUDE_DIR
 )

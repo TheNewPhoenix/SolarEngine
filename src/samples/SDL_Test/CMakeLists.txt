@@ -11,3 +11,8 @@ add_custom_command(TARGET SDLTest POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/libs
         $<TARGET_FILE_DIR:SDLTest>)
+
+add_custom_command(TARGET SDLTest POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/config.json
+        $<TARGET_FILE_DIR:SDLTest>/config.json)
